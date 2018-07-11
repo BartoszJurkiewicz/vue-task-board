@@ -58,4 +58,8 @@ export default {
     font-size: 2rem;
   }
 }
+.el-input__inner {
+  text-align: center;
+  font-size: 2rem;
+}
 </style>

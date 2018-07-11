@@ -1,6 +1,8 @@
 <template>
   <ul class="tasks-list__list">
-    <li class="list__title">{{list.name}}</li>
+    <li class="list__title">
+      <el-input v-model="listName" @change="handleTitleChange"/>
+    </li>
     <draggable :id="list.slug" :data-list-slug="list.slug" v-model="tasks" :options="{group: 'tasks'}" @add="handleMove" class="tasks-list__draggable">
       <task-card v-for="task in tasks" :key="task.id" :task-data="task" class="list__card" />
     </draggable>
@@ -17,6 +19,11 @@ export default {
     list: {
       type: Object,
       required: true
+    }
+  },
+  data () {
+    return {
+      listName: this.list.name
     }
   },
   computed: {
@@ -42,6 +49,9 @@ export default {
       const listSlug = this.list.slug || task.target.dataset.listSlug
       const newIndex = moveData.order || Number(moveData.newIndex) + 1
       this.$store.dispatch('updateTask', Object.assign({}, task, { list: listSlug, order: newIndex }))
+    },
+    handleTitleChange (val) {
+      this.$store.dispatch('updateListTitle', Object.assign({}, this.list, {name: val}))
     }
   }
 }

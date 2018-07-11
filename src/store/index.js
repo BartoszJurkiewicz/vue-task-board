@@ -28,6 +28,10 @@ export default new Vuex.Store({
     },
     ADD_LIST: (state, listId) => {
       state.lists.push({slug: `${listId}`, name: 'List'})
+    },
+    UPDATE_LIST_TITLE: (state, updatedList) => {
+      const listIndex = state.lists.findIndex(list => list.slug === updatedList.slug)
+      Vue.set(state.lists[listIndex], 'name', updatedList.name)
     }
   },
   actions: {
@@ -42,6 +46,9 @@ export default new Vuex.Store({
     },
     addList: ({commit}, listId) => {
       commit('ADD_LIST', listId)
+    },
+    updateListTitle: ({commit}, list) => {
+      commit('UPDATE_LIST_TITLE', list)
     }
   },
   getters: {
