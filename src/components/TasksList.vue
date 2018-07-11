@@ -41,7 +41,6 @@ export default {
       const task = this.$store.getters['_getTaskById'](taskId)
       const listSlug = this.list.slug || task.target.dataset.listSlug
       const newIndex = moveData.order || Number(moveData.newIndex) + 1
-      console.log('handleMove', moveData, taskId, task)
       this.$store.dispatch('updateTask', Object.assign({}, task, { list: listSlug, order: newIndex }))
     }
   }

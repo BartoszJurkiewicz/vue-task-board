@@ -10,9 +10,9 @@ export default new Vuex.Store({
       {slug: 'list2', name: 'List #2'}
     ],
     tasks: [
-      {id: 1, list: 'main', title: 'Task #1', description: 'Description for task#1', order: 0},
-      {id: 2, list: 'main', title: 'Task #2', description: 'Description for task#2', order: 1},
-      {id: 3, list: 'list2', title: 'Task #3', description: 'Description for task#3', order: 0}
+      {id: 1, list: 'main', title: 'Task #1', description: 'Description for task#1', date: '2018-07-12 12:00:00', order: 0},
+      {id: 2, list: 'main', title: 'Task #2', description: 'Description for task#2', date: '2018-06-20 19:30:00', order: 1},
+      {id: 3, list: 'list2', title: 'Task #3', description: 'Description for task#3', date: '2018-07-08 16:22:00', order: 0}
     ]
   },
   mutations: {
