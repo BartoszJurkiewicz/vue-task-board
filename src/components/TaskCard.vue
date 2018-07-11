@@ -1,7 +1,12 @@
 <template>
   <li :data-task-id="taskData.id">
-    <el-card>
-      <p slot="header">{{taskData.title}}</p>
+    <el-card shadow="hover">
+      <div slot="header">
+        <span class="task__title">
+          {{taskData.title}}
+        </span>
+        <el-button @click="$emit('editTask', taskData)" class="task__edit-btn" icon="el-icon-edit" size="mini" circle></el-button>
+      </div>
       <p>{{taskData.description}}</p>
       <el-tooltip v-if="taskData.date" effect="dark" placement="top" :content="taskData.date | date">
         <p>Due date: {{taskData.date | remaining}}</p>
@@ -40,5 +45,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.task__title {
+  float: left;
+}
+.task__edit-btn {
+  float: right
+}
 </style>

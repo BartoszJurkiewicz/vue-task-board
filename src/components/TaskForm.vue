@@ -38,15 +38,28 @@ export default {
     listSlug: {
       type: String,
       default: ''
+    },
+    taskProp: {
+      type: Object,
+      default: function () {
+        return {
+          title: '',
+          list: '',
+          description: '',
+          date: '',
+          order: null,
+          id: null
+        }
+      }
     }
   },
   data () {
     return {
       taskModel: {
-        title: '',
-        list: this.listSlug,
-        description: '',
-        date:  '',
+        title: this.taskProp.title,
+        list: this.taskProp.list || this.listSlug,
+        description: this.taskProp.description,
+        date:  this.taskProp.date,
       },
       validation: {
         title: [
@@ -71,10 +84,10 @@ export default {
       const listTasksByOrder = this.listTasks.sort((a, b) => a.order - b.order)
       const tasksById = this.tasks.sort((a, b) => a.id - b.id)
       const taskData = { 
-        id: tasksById.slice(-1)[0].id + 1,
-        order: 0
+        id: this.taskProp.id || tasksById.slice(-1)[0].id + 1,
+        order: this.taskProp.order
       }
-      if (listTasksByOrder.length > 0) taskData.order = listTasksByOrder.slice(-1)[0].order + 1
+      if (listTasksByOrder.length > 0 && !('order' in this.taskProp)) taskData.order = listTasksByOrder.slice(-1)[0].order + 1
       return taskData
     }
   },
@@ -82,20 +95,28 @@ export default {
     handleSubmit () {
       this.$refs.taskForm.validate()
         .then(res => {
-          this.$store.dispatch('createTask', Object.assign({}, this.taskModel, this.taskData))
-          this.handleSuccess()
+          let action,msg
+          const taskEdit = this.tasks.find(task => task.id === this.taskData.id)
+          if (taskEdit) {
+            action = 'updateTask'
+            msg = 'Task edited successfully'
+          } else {
+            action = 'createTask'
+            msg = 'Task created successfully'
+          }
+          this.handleSuccess(msg)
+          this.$store.dispatch(action, Object.assign({}, this.taskModel, this.taskData))
           this.$emit('formClose')
         })
         .catch(err => {
-          console.log(err)
           this.handleError()  
         })
 
     },
-    handleSuccess () {
+    handleSuccess (msg) {
       Notification.success({
         title: 'Success',
-        message: 'Task created successfully',
+        message: msg,
         position: 'bottom-left'
       })
     },
