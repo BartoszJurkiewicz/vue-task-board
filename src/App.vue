@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="tasks-lists__container">
+      <tasks-list v-for="list in lists" :key="list.slug" :list="list" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TasksList from './components/TasksList'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  components: { TasksList },
+  computed: {
+    lists () {
+      return this.$store.state.lists
+    }
   }
 }
 </script>
@@ -24,5 +28,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.tasks-lists__container {
+  display: flex;
 }
 </style>
