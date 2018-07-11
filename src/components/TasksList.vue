@@ -66,6 +66,8 @@ a {
 .tasks-list__list {
   display: flex;
   flex-direction: column;
+  flex-basis: 20vw;
+  min-width: 200px;
   padding: 2rem .4rem;
   margin-right: 2rem;
   border-radius: .6rem;

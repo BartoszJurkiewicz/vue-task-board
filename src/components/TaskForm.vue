@@ -76,11 +76,13 @@ export default {
         .then(res => {
           this.$store.dispatch('createTask', Object.assign({}, this.taskModel, this.taskData))
           this.handleSuccess()
+          this.$emit('formClose')
         })
         .catch(err => {
           console.log(err)
           this.handleError()  
         })
+
     },
     handleSuccess () {
       Notification.success({

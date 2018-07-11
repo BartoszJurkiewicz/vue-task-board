@@ -25,6 +25,9 @@ export default new Vuex.Store({
     },
     REMOVE_TASK: (state, taskId) => {
       console.log('removing task', taskId)
+    },
+    ADD_LIST: (state, listId) => {
+      state.lists.push({slug: `${listId}`, name: 'List'})
     }
   },
   actions: {
@@ -36,6 +39,9 @@ export default new Vuex.Store({
     },
     removeTask: ({commit}, taskId) => {
       commit('REMOVE_TASK', taskId)
+    },
+    addList: ({commit}, listId) => {
+      commit('ADD_LIST', listId)
     }
   },
   getters: {

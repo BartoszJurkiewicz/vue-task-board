@@ -6,6 +6,7 @@
     <el-button @click="formActive = true">Add card</el-button>
     <div class="tasks-lists__container">
       <tasks-list v-for="list in lists" :key="list.slug" :list="list" />
+      <el-button @click="addList" class="add-list" icon="el-icon-circle-plus" circle></el-button>
     </div>
   </div>
 </template>
@@ -23,8 +24,11 @@ export default {
     }
   },
   computed: {
-    lists () {
-      return this.$store.state.lists
+    lists () { return this.$store.state.lists }
+  },
+  methods: {
+    addList () {
+      this.$store.dispatch('addList', Math.random().toString(36).substr(2, 5))
     }
   }
 }
@@ -47,5 +51,11 @@ export default {
 }
 .tasks-lists__container {
   display: flex;
+}
+.add-list {
+  align-self: center;
+  .el-icon-circle-plus {
+    font-size: 2rem;
+  }
 }
 </style>
