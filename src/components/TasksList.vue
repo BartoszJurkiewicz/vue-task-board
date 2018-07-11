@@ -14,10 +14,13 @@
 
 <script>
 import draggable from 'vuedraggable'
-import TaskCard from './TaskCard'
 
 export default {
   name: 'TaskList',
+  components: { 
+    draggable,
+    TaskCard: () => import('./TaskCard')
+  },
   props: {
     list: {
       type: Object,
@@ -44,7 +47,6 @@ export default {
       }
     }
   },
-  components: { draggable, TaskCard },
   methods: {
     handleMove (moveData) {
       const taskId = moveData.id || moveData.item.dataset.taskId

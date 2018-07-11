@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import './registerServiceWorker'
 import { Icon, Card, Button, Row, Col, Form, FormItem, Input, Select, Option, DatePicker, Tooltip } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import lang from 'element-ui/lib/locale/lang/en'
@@ -22,7 +21,7 @@ Vue.use(Tooltip)
 
 locale.use(lang)
 
-Vue.config.productionTip = true
+Vue.config.productionTip = false
 
 new Vue({
   store,

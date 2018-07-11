@@ -12,11 +12,13 @@
 
 <script>
 import TasksList from './components/TasksList'
-import TaskForm from './components/TaskForm'
 
 export default {
   name: 'app',
-  components: { TasksList, TaskForm },
+  components: { 
+    TasksList,
+    TaskForm: () => import('./components/TaskForm')
+  },
   data () {
     return {
       formActive: false,
