@@ -34,11 +34,17 @@ import { Notification } from 'element-ui'
 
 export default {
   name: 'TaskForm',
+  props: {
+    listSlug: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       taskModel: {
         title: '',
-        list: '',
+        list: this.listSlug,
         description: '',
         date:  '',
       },
@@ -64,10 +70,12 @@ export default {
     taskData () {
       const listTasksByOrder = this.listTasks.sort((a, b) => a.order - b.order)
       const tasksById = this.tasks.sort((a, b) => a.id - b.id)
-      return {
+      const taskData = { 
         id: tasksById.slice(-1)[0].id + 1,
-        order: listTasksByOrder.slice(-1)[0].order + 1
+        order: 0
       }
+      if (listTasksByOrder.length > 0) taskData.order = listTasksByOrder.slice(-1)[0].order + 1
+      return taskData
     }
   },
   methods: {

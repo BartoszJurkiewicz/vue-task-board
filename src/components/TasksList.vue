@@ -6,6 +6,9 @@
     <draggable :id="list.slug" :data-list-slug="list.slug" v-model="tasks" :options="{group: 'tasks'}" @add="handleMove" class="tasks-list__draggable">
       <task-card v-for="task in tasks" :key="task.id" :task-data="task" class="list__card" />
     </draggable>
+    <li>
+      <el-button @click="$emit('addCard', list.slug)">Add card</el-button>
+    </li>
   </ul>
 </template>
 

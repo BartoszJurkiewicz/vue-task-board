@@ -1,11 +1,10 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <task-form v-if="formActive" @formClose="formActive = false"/>
+      <task-form v-if="formActive" :list-slug="listSlug" @formClose="formActive = false"/>
     </transition>
-    <el-button @click="formActive = true">Add card</el-button>
     <div class="tasks-lists__container">
-      <tasks-list v-for="list in lists" :key="list.slug" :list="list" />
+      <tasks-list v-for="list in lists" :key="list.slug" :list="list" @addCard="addCard" />
       <el-button @click="addList" class="add-list" icon="el-icon-circle-plus" circle></el-button>
     </div>
   </div>
@@ -20,7 +19,8 @@ export default {
   components: { TasksList, TaskForm },
   data () {
     return {
-      formActive: false
+      formActive: false,
+      listSlug: ''
     }
   },
   computed: {
@@ -29,6 +29,10 @@ export default {
   methods: {
     addList () {
       this.$store.dispatch('addList', Math.random().toString(36).substr(2, 5))
+    },
+    addCard (listSlug) {
+      this.listSlug = listSlug
+      this.formActive = true
     }
   }
 }
