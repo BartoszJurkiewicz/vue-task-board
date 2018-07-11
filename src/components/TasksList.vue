@@ -1,7 +1,7 @@
 <template>
   <ul class="tasks-list__list">
     <li class="list__title">{{list.name}}</li>
-    <draggable :id="list.slug" v-model="tasks" :options="{group: 'tasks'}" @add="handleMove" class="tasks-list__draggable">
+    <draggable :id="list.slug" :data-list-slug="list.slug" v-model="tasks" :options="{group: 'tasks'}" @add="handleMove" class="tasks-list__draggable">
       <task-card v-for="task in tasks" :key="task.id" :task-data="task" class="list__card" />
     </draggable>
   </ul>
@@ -22,17 +22,27 @@ export default {
   computed: {
     tasks: {
       get () {
-        return this.$store.getters['_getListTasks'](this.list.slug)
+        let tasks = this.$store.getters['_getListTasks'](this.list.slug)
+        return tasks.sort((a, b) => a.order - b.order)
       },
       set (tasks) {
-        console.log('setting', tasks)
+        tasks.forEach((task, index) => {
+          if(Number(task.order) !== index + 1) {
+            this.handleMove(Object.assign({}, task, {order: index + 1}))
+          }
+        })
       }
     }
   },
   components: { draggable, TaskCard },
   methods: {
-    handleMove (data) {
-      console.log(data)
+    handleMove (moveData) {
+      const taskId = moveData.id || moveData.item.dataset.taskId
+      const task = this.$store.getters['_getTaskById'](taskId)
+      const listSlug = this.list.slug || task.target.dataset.listSlug
+      const newIndex = moveData.order || Number(moveData.newIndex) + 1
+      console.log('handleMove', moveData, taskId, task)
+      this.$store.dispatch('updateTask', Object.assign({}, task, { list: listSlug, order: newIndex }))
     }
   }
 }
@@ -65,6 +75,7 @@ a {
 .tasks-list__draggable {
   display: flex;
   flex-direction: column;
+  min-height: 1rem;
 }
 .list__title, .list__card {
   margin-bottom: 2rem;

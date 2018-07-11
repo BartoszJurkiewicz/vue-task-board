@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li :data-task-id="taskData.id">
     <el-card>
       <p slot="header">{{taskData.title}}</p>
       <p>{{taskData.description}}</p>

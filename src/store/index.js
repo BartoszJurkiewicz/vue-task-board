@@ -10,9 +10,9 @@ export default new Vuex.Store({
       {slug: 'list2', name: 'List #2'}
     ],
     tasks: [
-      {id: 1, list: 'main', title: 'Task #1', description: 'Description for task#1'},
-      {id: 2, list: 'main', title: 'Task #2', description: 'Description for task#2'},
-      {id: 3, list: 'list2', title: 'Task #3', description: 'Description for task#3'}
+      {id: 1, list: 'main', title: 'Task #1', description: 'Description for task#1', order: 0},
+      {id: 2, list: 'main', title: 'Task #2', description: 'Description for task#2', order: 1},
+      {id: 3, list: 'list2', title: 'Task #3', description: 'Description for task#3', order: 0}
     ]
   },
   mutations: {
@@ -20,7 +20,8 @@ export default new Vuex.Store({
       state.tasks.push(task)
     },
     UPDATE_TASK: (state, updatedTask) => {
-      Vue.$set(state, state.tasks.findIndex(task => task.id === updatedTask.id), updatedTask)
+      const taskIndex = state.tasks.findIndex(task => task.id === updatedTask.id)
+      Vue.set(state.tasks, taskIndex, updatedTask)
     },
     REMOVE_TASK: (state, taskId) => {
       console.log('removing task', taskId)
@@ -38,6 +39,7 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    _getListTasks: state => listSlug => state.tasks.filter(task => task.list === listSlug)
+    _getListTasks: state => listSlug => state.tasks.filter(task => task.list === listSlug),
+    _getTaskById: state => taskId => state.tasks.find(task => task.id === Number(taskId))
   }
 })
