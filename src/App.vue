@@ -47,6 +47,9 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  font-size: 14px;
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
@@ -54,7 +57,7 @@ export default {
   opacity: 0;
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -72,6 +75,5 @@ export default {
 }
 .el-input__inner {
   text-align: center;
-  font-size: 2rem;
 }
 </style>

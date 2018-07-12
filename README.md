@@ -1,2 +1,4 @@
 # vue-task-board
-Simple Vue task board app.
+Simple drag&drop prerendered Vue task board app.
+
+<a href="http://bartoszjurkiewicz.com.pl/dev/vue-task-board/">Demo</a>
